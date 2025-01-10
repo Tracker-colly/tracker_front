@@ -1,9 +1,10 @@
-import { Children, useEffect, useState } from "react"
+import { Children, useEffect, useRef, useState } from "react"
 import images from "../libs/images"
 import Button from "./Button"
 import RadioButton from "./RadioButton"
 import Radio from "./Radio"
 import { useConfig } from "../zustand/store"
+import { Tooltip } from "react-tooltip"
 
 export default function ModalAuth(props) {
     const {
@@ -15,6 +16,9 @@ export default function ModalAuth(props) {
         onCancel,
         onConfirm
     } = props
+
+    const tooltipRef = useRef();
+    const [toolOpen, setToolOpen] = useState(false);
 
     const { config } = useConfig();
     const [visible, setVisible] = useState(false)
@@ -78,13 +82,27 @@ export default function ModalAuth(props) {
                 //     { values: 3, label: "부장" },
                 // ]}
                 />
-                <p className="title1 mt-24 bold">권한</p>
+                <div className="mt-24" style={{ display: "flex", alignItems: "center", height: 19 }}>
+                    <p className="title1 bold">권한</p>
+                    <img
+                        data-tooltip-id="auth-tooltip-id"
+                        style={{ padding: "6px 0px" }}
+                        src={images.helper_icon} onClick={() => {
+                            if (toolOpen) {
+                                setToolOpen(false)
+                                tooltipRef.current?.close();
+                            } else {
+                                setToolOpen(true)
+                                tooltipRef.current?.open();
+                            }
+                        }} />
+                </div>
                 <Radio
                     className="mt-18"
                     value={level}
                     setValue={setLevel}
                     options={[
-                        { values: 3, label: "Adminstartor" },
+                        { values: 3, label: "Administrator" },
                         { values: 2, label: "Staff" },
                     ]} />
 
@@ -108,6 +126,33 @@ export default function ModalAuth(props) {
                         }}
                     />}
                 </div>
+
+                <Tooltip
+                    ref={tooltipRef}
+                    id={"auth-tooltip-id"}
+                    style={{
+                        zIndex: 10,
+                        borderRadius: 4,
+                        background: "#3A474E",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 5,
+                        padding: "8px 8px"
+                    }}
+                    place="left-start"
+                    openEvents={["click"]}
+                    afterShow={() => { }}
+                    clickable={true}
+                >
+                    <p className="font-13 bold color-white" onClick={() => {
+                        tooltipRef.current?.close()
+                    }}>
+                        <span className=" font-13 color-tooltip bold">Administrator</span> : 인사평가 작성을 <br />
+                        할 수 있는 권한입니다.<br />
+                        <span className=" font-13 color-tooltip bold">Staff</span> : 링크 연결된 멤버의 기본<br />
+                        권한입니다.
+                    </p>
+                </Tooltip>
             </div>
         </div>
     </div>

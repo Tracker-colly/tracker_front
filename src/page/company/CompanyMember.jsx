@@ -362,7 +362,7 @@ export default function CompanyMember() {
             title={editUser?.userName + "님의 권한을 변경할까요?"}
             message={<>
                 직책: {editUser?.codeName}<br />
-                권한: {editUser?.level == 3 ? "Adminstartor" : "Staff"}
+                권한: {editUser?.level == 3 ? "Administrator" : "Staff"}
             </>}
             confirm="확인"
             onConfirm={setAuthFunc}

@@ -127,6 +127,8 @@ import profile_ok from "../images/profile_ok.png"
 import profile_no from "../images/profile_no.png"
 import red_dot from "../images/red_dot.svg"
 
+import helper_icon from "../images/helper-icon.svg"
+
 const exportData = {
     card_red,
     card_blue,
@@ -237,6 +239,7 @@ const exportData = {
     profile_no,
 
     red_dot,
+    helper_icon,
 }
 
 export default exportData;
